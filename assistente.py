@@ -177,7 +177,6 @@ def calcula(mensagem):
         print(f"Erro ao calcular: {e}")
 
 
-
 def executa_comandos(mensagem):
     """Executa ações com base no comando recebido."""
     if mensagem is None:
