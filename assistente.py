@@ -49,10 +49,12 @@ def monitora_audio():
             print(f"Você disse: {mensagem}")
             return mensagem
         except sr.UnknownValueError:
-            print("Não entendi. Pode repetir?")
+            cria_audio(
+                "não_entendi.mp3", "Desculpe, não consegui entender o que você disse. Pode repetir, por favor?")
             return None
         except sr.RequestError as e:
-            print(f"Erro no serviço de reconhecimento: {e}")
+            cria_audio("erro_microfone.mp3",
+                       f"Houve um problema no reconhecimento de voz.: {e}")
             return None
 
 
@@ -130,6 +132,14 @@ def executa_comandos(mensagem):
     """Executa ações com base no comando recebido."""
     if mensagem is None:
         return
+    
+    # Verificar se o comando começa com "Ana"
+    if not mensagem.startswith("ana"):
+        cria_audio("não_chama.mp3", "Você me chamou? Não consegui identificar.")
+        return
+    
+    # Remove "Ana" do comando para processar o resto
+    mensagem = mensagem.replace("Ana", "").strip()
 
     if "notícias" in mensagem:
         noticias()
@@ -169,7 +179,8 @@ def executa_comandos(mensagem):
             cria_audio("erro_programa.mp3",
                        "Desculpe, não encontrei o programa.")
     else:
-        cria_audio("nao_entendido.mp3", "Desculpe, não entendi o comando.")
+        cria_audio("nao_entendido.mp3",
+                   "Desculpe, ainda não sei como ajudar com isso. Pode tentar reformular o comando?")
 
 
 def main():
