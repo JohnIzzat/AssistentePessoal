@@ -1,10 +1,12 @@
-# Assistente Pessoal com Python
+# Assistente Pessoal com Python (HOMOLOGAÇÂO)
 
-## (Hologação)
-
-Fala pessoal, e a assistente pessoal virtual que escuta os seus comandos de voz e executa-os!
-utilizei como base de código a assistente pessoal que a rafaballerini fez o usuario do GitHub dele a baixo.
+Fala pessoal, e a assistente pessoal virtual que escuta os seus comandos de voz e executa-os!<br>
+Utilizei como base de código da assistente pessoal que a rafaballerini fez o usuario do GitHub dele a baixo.<br>
 github.com/rafaballerini
+
+
+
+
 
 ## Features:
 * **⌚ Horário atual:** "Que horas são?"<br>
