@@ -2,11 +2,13 @@ import os
 import speech_recognition as sr
 import webbrowser as browser
 import requests
+import re
 from gtts import gTTS
 from playsound import playsound
 from datetime import datetime
 from bs4 import BeautifulSoup
 from translate import Translator
+
 
 # Dicionário de programas
 programas = {
@@ -128,6 +130,45 @@ def tradutor(texto, idioma_destino):
         cria_audio("erro_tradutor.mp3", "Erro ao traduzir.")
 
 
+def calcula(mensagem):
+    """Interpreta e realiza cálculos básicos."""
+    try:
+        # Verificar a mensagem original
+        print(f"Mensagem recebida: {mensagem}")
+
+        match = re.search(r"quanto é (.+)", mensagem)
+        if not match:
+            raise ValueError("Nenhuma operação encontrada.")
+
+        operacao = match.group(1)
+        print(f"Operação extraída: {operacao}")  # Antes das substituições
+
+        # Substituições
+        operacao = operacao.replace("mais", "+")
+        operacao = operacao.replace("menos", "-")
+        operacao = operacao.replace("vezes", "*")
+        operacao = operacao.replace("dividido por", "/")
+        print(f"Operação formatada: {operacao}")  # Após as substituições
+
+        # Avaliar a operação matematicamente
+        resultado = eval(operacao)
+        print(f"Resultado do cálculo: {resultado}")  # Resultado do cálculo
+
+        cria_audio("calculo.mp3", f"O resultado é {resultado}.")
+    except ZeroDivisionError:
+        cria_audio("erro_divisao.mp3",
+                   "Não é possível dividir por zero. Tente novamente.")
+    except ValueError as e:
+        cria_audio("erro_entrada.mp3",
+                   "Não entendi o cálculo. Certifique-se de usar números e operações válidas.")
+        print(f"Erro de validação: {e}")
+    except Exception as e:
+        cria_audio("erro_calculo.mp3",
+                   "Desculpe, ocorreu um erro ao realizar o cálculo. Tente novamente.")
+        print(f"Erro ao calcular: {e}")
+
+
+
 def executa_comandos(mensagem):
     """Executa ações com base no comando recebido."""
     if mensagem is None:
@@ -145,6 +186,11 @@ def executa_comandos(mensagem):
         cria_audio("encerrando.mp3", "até logo!")
         exit() #Encerra o programa
 
+    # Comando para cálculos básicos
+    if "quanto é" in mensagem:
+        calcula(mensagem)
+        return
+    
     elif "notícias" in mensagem:
         noticias()
     elif "cotação do" in mensagem:
