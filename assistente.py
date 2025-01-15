@@ -8,6 +8,8 @@ from playsound import playsound
 from datetime import datetime
 from bs4 import BeautifulSoup
 from translate import Translator
+from pydub import AudioSegment
+from pydub.playback import play
 
 
 # Dicionário de programas
@@ -58,6 +60,13 @@ def monitora_audio():
             cria_audio("erro_microfone.mp3",
                        f"Houve um problema no reconhecimento de voz.: {e}")
             return None
+
+
+def melhora_audio(arquivo_audio):
+    audio = AudioSegment.from_file(arquivo_audio)
+    audio = audio.normalize()  # Normaliza o volume
+    audio = audio.low_pass_filter(3000)  # Filtro para remover ruídos altos
+    play(audio)
 
 
 def noticias():
