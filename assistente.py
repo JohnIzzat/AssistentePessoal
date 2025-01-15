@@ -141,7 +141,11 @@ def executa_comandos(mensagem):
     # Remove "Ana" do comando para processar o resto
     mensagem = mensagem.replace("Ana", "").strip()
 
-    if "notícias" in mensagem:
+    if any(palavra in mensagem for palavra in ["fechar", "encerrar", "sair"]):
+        cria_audio("encerrando.mp3", "até logo!")
+        exit() #Encerra o programa
+
+    elif "notícias" in mensagem:
         noticias()
     elif "cotação do" in mensagem:
         moeda = mensagem.split("cotação do")[-1].strip().upper()
@@ -162,9 +166,9 @@ def executa_comandos(mensagem):
     elif "abrir navegador" in mensagem:
         cria_audio("navegador.mp3", "Abrindo o navegador.")
         browser.open("https://www.google.com")
-    elif "que horas são" in mensagem:
-        hora_atual = datetime.now().strftime("%H:%M")
-        cria_audio("hora.mp3", f"Agora são {hora_atual}.")
+    elif any(palavra in mensagem for palavra in ["que horas são", "são que horas", "hora"]):
+        hora_atual = datetime.now() .strftime("%H:%M")
+        cria_audio("hora.mp3", f"agora são {hora_atual}.")
     elif "abrir" in mensagem:
         programa_desejado = mensagem.split("abrir")[-1].strip().lower()
         if programa_desejado in programas:
