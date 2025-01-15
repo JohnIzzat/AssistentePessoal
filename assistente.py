@@ -16,6 +16,8 @@ programas = {
     "discord": r"C:\Users\DEV\AppData\Local\Discord\app-1.0.9177\Discord.exe",
     # Caminho para a notion
     "notion": r"C:\Users\DEV\AppData\Local\Programs\Notion\Notion.exe",
+    # Caminho para o Brave navegador
+    "bloco de notas": r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe",
     # Caminho para o Bloco de Notas
     "bloco de notas": r"C:\Windows\System32\notepad.exe",
     # Caminho para a Calculadora
