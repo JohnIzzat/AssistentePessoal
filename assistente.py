@@ -10,8 +10,12 @@ from translate import Translator
 
 # Dicionário de programas
 programas = {
-    # Exemplo para o Google Chrome
-    "navegador": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+    # Exemplo para o Firefox
+    "navegador": r"C:\Program Files\Mozilla Firefox\firefox.exe",
+    # Caminho para a discord
+    "discord": r"C:\Users\DEV\AppData\Local\Discord\app-1.0.9177\Discord.exe",
+    # Caminho para a notion
+    "notion": r"C:\Users\DEV\AppData\Local\Programs\Notion\Notion.exe",
     # Caminho para o Bloco de Notas
     "bloco de notas": r"C:\Windows\System32\notepad.exe",
     # Caminho para a Calculadora
