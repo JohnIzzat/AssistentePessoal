@@ -14,7 +14,7 @@ from pydub.playback import play
 
 # Dicionário de programas
 programas = {
-    # Exemplo para o Firefox
+    # Caminho navegador Firefox
     "navegador": r"C:\Program Files\Mozilla Firefox\firefox.exe",
     # Caminho para a discord
     "discord": r"C:\Users\DEV\AppData\Local\Discord\app-1.0.9177\Discord.exe",
