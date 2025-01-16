@@ -3,6 +3,8 @@ import speech_recognition as sr
 import webbrowser as browser
 import requests
 import re
+import urllib.request
+import json
 from gtts import gTTS
 from playsound import playsound
 from datetime import datetime
@@ -82,6 +84,16 @@ def noticias():
         print(f"Erro ao obter notícias: {e}")
         cria_audio("erro_noticias.mp3", "Erro ao obter notícias.")
 
+    # Função de Filmes (Use a sua API)
+def filmes():
+	token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YjU4MjUxODc4MmNlNDBiYmJlNmVkZWYyNGE1MTQxZSIsIm5iZiI6MTczNjk3MDA2OC4zNjMwMDAyLCJzdWIiOiI2Nzg4MGY1NGI5ZDFkMTBlZjE5NzVhY2UiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.d3iwB5iTgl8WegA__pWh2reGj6NFPM-v2eAR1rZwN_E"
+	url = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=9b582518782ce40bbbe6edef24a5141e'
+	resposta = urllib.request.urlopen(url)
+	dados = resposta.read()
+	jsondata = json.loads(dados)
+	filmes = jsondata = json.loads(dados)['results']
+	for filme in filmes[:5]:
+		cria_audio("filmes.mp3", filme['title'], lang='pt')
 
 def cotacao(moeda):
     """Obtém a cotação de uma moeda específica."""
@@ -194,19 +206,30 @@ def executa_comandos(mensagem):
         cria_audio("encerrando.mp3", "até logo!")
         exit() #Encerra o programa
 
-    # Comando para cálculos básicos
+    # Calculos basicos
     if "quanto é" in mensagem:
         calcula(mensagem)
         return
     
+    # Noticias
     elif "notícias" in mensagem:
         noticias()
+
+    # Filmes
+    elif 'filmes' in mensagem and 'populares' in mensagem:
+        filmes()
+
+    #cotação    
     elif "cotação do" in mensagem:
         moeda = mensagem.split("cotação do")[-1].strip().upper()
         cotacao(moeda)
+
+    # clima    
     elif "clima em" in mensagem:
         cidade = mensagem.split("clima em")[-1].strip()
         clima(cidade)
+
+    # tradutor    
     elif "traduzir para inglês" in mensagem:
         cria_audio("traducao_pedir.mp3",
                    "O que você gostaria de traduzir para o inglês?")
@@ -217,6 +240,8 @@ def executa_comandos(mensagem):
                    "O que você gostaria de traduzir para o português?")
         texto = monitora_audio()
         tradutor(texto, "pt")
+
+    # Abrir navegador    
     elif "abrir navegador" in mensagem:
         cria_audio("navegador.mp3", "Abrindo o navegador.")
         browser.open("https://www.google.com")
